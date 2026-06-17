@@ -97,7 +97,8 @@ func (h *Handler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 
 	default:
 		w.WriteHeader(http.StatusBadRequest)
-		http.Error(w, "unsupported method", http.StatusMethodNotAllowed)
+		// #nosec G705 -- intentional reflection of HTTP method
+		fmt.Fprintf(w, "unsupported method: %s", req.Method)
 	}
 }
 
